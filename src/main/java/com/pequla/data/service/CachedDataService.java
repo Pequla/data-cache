@@ -66,6 +66,9 @@ public class CachedDataService {
     }
 
     public Optional<CachedData> getByUuid(String uuid, HttpServletRequest request) {
+        // UUID contains dashes
+        if (uuid.contains("-"))
+            uuid = uuid.replace("-", "");
         validateCache(repository.findByUuid(uuid));
         accessService.saveAccess(request);
         return repository.findByUuid(uuid);
